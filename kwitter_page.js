@@ -1,11 +1,11 @@
 const firebaseConfig = {
-    apiKey: "AIzaSyD99DsDR58Z5N8dR2lLxvRxyq3wNIznroY",
-    authDomain: "kwitter-7f23b.firebaseapp.com",
-    databaseURL: "https://kwitter-7f23b-default-rtdb.firebaseio.com",
-    projectId: "kwitter-7f23b",
-    storageBucket: "kwitter-7f23b.appspot.com",
-    messagingSenderId: "474378443490",
-    appId: "1:474378443490:web:af06ad867c5807ff2d1cbb"
+    apiKey: "AIzaSyDOJYflBmPYMmoF3vu3oEJBY_uB65fD8m8",
+    authDomain: "kwitter-b4ca1.firebaseapp.com",
+    databaseURL: "https://kwitter-b4ca1-default-rtdb.firebaseio.com",
+    projectId: "kwitter-b4ca1",
+    storageBucket: "kwitter-b4ca1.appspot.com",
+    messagingSenderId: "768109029620",
+    appId: "1:768109029620:web:64cfc42484f0b71a6b56a1"
   };
   
      firebase.initializeApp(firebaseConfig);
@@ -30,10 +30,22 @@ const firebaseConfig = {
   function getData() { firebase.database().ref("/"+room_name).on('value', function(snapshot) { document.getElementById("output").innerHTML = ""; snapshot.forEach(function(childSnapshot) { childKey  = childSnapshot.key; childData = childSnapshot.val(); if(childKey != "purpose") {
          firebase_message_id = childKey;
          message_data = childData;
-  //Start code
-  
-  //End code
-      } });  }); }
+      
+
+      console.log(firebase_message_id);
+      console.log(message_data);
+      name = message_data['name'];
+      message = message_data['message'];
+      like = message_data['like'];
+        name_with_tag = "<h4> "+ name +"<img class='user_tick' src='tick.png'></h4>";
+        message_with_tag = "<h4 class='message_h4'>" + message + "</h4>";
+        like_button ="<button class='btn btn-warning' id="+firebase_message_id+" value="+like+" onclick='updateLike(this.id)'>";
+        span_with_tag = "<span class='glyphicon glyphicon-thumbs-up'>Like: "+ like +"</span></button><hr>";
+        row = name_with_tag + message_with_tag +like_button + span_with_tag;       
+        document.getElementById("output").innerHTML += row;
+    
+    } });  }); }
+
   getData();
   
   function logout(){
